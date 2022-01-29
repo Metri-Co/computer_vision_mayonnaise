@@ -7,7 +7,7 @@ function img_process(df, filepath, file_ext, s_element,
 		n = df[i,1]
 		samples[i,1] = n
 	end
-	array = zeros(n_samples, 56) # 55 features + first column with sample ID
+	array = zeros(n_samples, 80) # 79 features + first column with sample ID
 	# Initialize feature extraction and indexing in array
 	for i = 1:n_samples
 		println("Segmentation and conversion colors of image $(i)\n")
