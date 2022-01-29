@@ -890,76 +890,12 @@ function kurtosis(img, component)
 	result = StatsBase.kurtosis(vector)
 	return result
 end
-
-######################## Nuevas características ################################
-
-
-#promedio de los pixeles de fondo (de los que no tienen mayonesa) y de la mayonesa
-#comparar los promedios => nueva característica abs(fondo - mayo)
-
-# amarillo => las mismas que en todas media, std, min y  max
-# skewness y kurtosis => a todos los canales en todos los espacios
-# agregar la comparación
-mayo = load("C:/Users/metri/Desktop/Julia/images/683.jpg")
-f = Otsu()
-s_element = structural_element("disk", 19)
-my_mask = mask_open(mayo,0.50, 0.75, s_element)
-mask2 = erosion(my_mask, s_element)
-prueba = binarize(mayo, f)
-otsu_op = erosion(prueba, s_element)
-imshow(mask2
-imshow(my_mask)
-imshow(prueba)
-imshow(mayo)
-imshow(otsu_op)
+# Creation of the mask
 function create_mask(img, algorithm, element)
 	mask = binarize(img, algorithm)
 	mask = erosion(mask, element)
 	return mask
 end
 
-prueba_func = create_mask(mayo, f, s_element)
-
-mayo_gray =
-mayo_si = superimpose(mayo, prueba_func)
-bkg = background(mayo, prueba_func)
-
-function background(img, mask)
-	bkg_img = copy(img)
-	x, y = size(img)
-	for i = 1:x
-		for j = 1:y
-			if mask[i,j] == 1
-				bkg_img[i,j] = float64(0)
-			end
-		end
-	end
-	return bkg_img
-end
-# function for calculate the mean of gray levels in the background
-function mean_bkg(img, mask)
-	img_gray = luminosity(img)
-	bkg = background(img_gray, mask)
-	x, y = size(bkg)
-	levels = 0
-	count = 0
-	for i = 1:x
-		for j = 1:y
-			if bkg[i,j] != 0
-				levels += bkg[i,j]
-				count += 1
-			end
-		end
-	end
-	result = levels/count
-	return result
-end
 
 
-mayo_si = superimpose(mayo, prueba_func)
-imshow(mayo_si_2)
-mayo_si_2 = yellow(mayo_si)
-mean_yellow(mayo_si)
-std_yellow(mayo_si)
-min_yellow(mayo_si)
-max_yellow(mayo_si)
